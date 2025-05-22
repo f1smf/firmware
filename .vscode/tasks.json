@@ -4,12 +4,22 @@
     {
       "type": "PlatformIO",
       "task": "Build",
-      "problemMatcher": ["$platformio"],
+      "problemMatcher": [
+        "$platformio"
+      ],
       "group": {
         "kind": "build",
         "isDefault": true
       },
       "label": "PlatformIO: Build"
+    },
+    {
+      "type": "PlatformIO",
+      "task": "Monitor",
+      "problemMatcher": [
+        "$platformio"
+      ],
+      "label": "PlatformIO: Monitor"
     }
   ]
 }
