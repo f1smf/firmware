@@ -32,7 +32,7 @@
 
 #define BATTERY_PIN PIN_A0 //3 //29     0 //26
 // ratio of voltage divider = 3.0 (R17=200k, R18=100k)
-#define ADC_MULTIPLIER 2.5 //3.065 //3.33 //1.84
+#define ADC_MULTIPLIER 2.6 //3.065 //3.33 //1.84
 #define BATTERY_SENSE_RESOLUTION_BITS ADC_RESOLUTION
 
 #define DETECTION_SENSOR_EN 28
