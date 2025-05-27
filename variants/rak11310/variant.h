@@ -30,9 +30,9 @@
 #define BUTTON_NEED_PULLUP
 #define EXT_NOTIFY_OUT 22
 
-#define BATTERY_PIN PIN_A0 //3 //29     0 //26
+#define BATTERY_PIN 26 //3 //29     0 //26  //PIN_A0
 // ratio of voltage divider = 3.0 (R17=200k, R18=100k)
-#define ADC_MULTIPLIER 3.05 //3.065 //3.33 //1.84
+#define ADC_MULTIPLIER 3.35 //3.065 //3.33 //1.84
 #define BATTERY_SENSE_RESOLUTION_BITS ADC_RESOLUTION
 
 #define DETECTION_SENSOR_EN 28
@@ -103,7 +103,6 @@
 
 #define PIN_ETH_POWER_EN 6
 
-#define MAX_NUM_NODES 250
-// #define MAX_NUM_NODES_FS 500
+#define MAX_NUM_NODES 500
 
-//#define SX126X_MAX_POWER 30
+// #define MAX_NUM_NODES_FS 500
