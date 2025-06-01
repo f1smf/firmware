@@ -37,6 +37,8 @@ static const uint8_t A3 = PIN_A3;
 #define PIN_SERIAL2_TX (8ul)
 #define PIN_SERIAL2_RX (9ul)
 
+#define USER_DEBUG_PORT Serial2
+
 // SPI
 #define PIN_SPI1_MISO (24u)
 #define PIN_SPI1_MOSI (15u)

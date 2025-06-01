@@ -4,6 +4,8 @@
 
 #define ARDUINO_ARCH_AVR
 
+#define log_d(...) Serial2.printf(__VA_ARGS__)
+
 /*#define RP2040_SLOW_CLOCK
 
 #ifdef RP2040_SLOW_CLOCK
@@ -22,6 +24,7 @@
 #define I2C_SDA1 10
 #define I2C_SCL1 11
 
+
 #define LED_CONN PIN_LED2
 #define LED_PIN LED_BUILTIN
 #define ledOff(pin) pinMode(pin, INPUT)
@@ -30,12 +33,15 @@
 #define BUTTON_NEED_PULLUP
 #define EXT_NOTIFY_OUT 22
 
-#define BATTERY_PIN 26 //3 //29     0 //26  //PIN_A0
+#define BATTERY_PIN 26 //3 //29   0 //26  //PIN_A0
 // ratio of voltage divider = 3.0 (R17=200k, R18=100k)
 #define ADC_MULTIPLIER 3.35 //3.065 //3.33 //1.84
 #define BATTERY_SENSE_RESOLUTION_BITS ADC_RESOLUTION
 
 #define DETECTION_SENSOR_EN 28
+
+// RAK12002 RTC Module
+// #define RV3028_RTC (uint8_t)0b1010010
 
 #define USE_SX1262
 
@@ -45,12 +51,7 @@
 #undef LORA_CS
 
 // RAK BSP somehow uses SPI1 instead of SPI0
-/*#define HW_SPI1_DEVICE
-#define LORA_SCK (10u)
-#define LORA_MOSI (11u)
-#define LORA_MISO (12u)
-#define LORA_CS (13u)
-
+/*
 #define LORA_DIO0 RADIOLIB_NC
 #define LORA_RESET 14
 #define LORA_DIO1 29
@@ -67,6 +68,7 @@
 #define SX126X_DIO2_AS_RF_SWITCH
 #define SX126X_DIO3_TCXO_VOLTAGE 1.8
 #endif*/
+
 // RAK BSP somehow uses SPI1 instead of SPI0
 #define HW_SPI1_DEVICE
 #define LORA_SCK (14u)
