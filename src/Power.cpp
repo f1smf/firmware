@@ -283,7 +283,7 @@ class AnalogBatteryLevel : public HasBatteryLevel
             return getINAVoltage();
         }
 #endif
-
+       
 #ifndef ADC_MULTIPLIER
 #define ADC_MULTIPLIER 2.0
 #endif
