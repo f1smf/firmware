@@ -131,6 +131,9 @@ void ScanI2CTwoWire::scanPort(I2CPort port, uint8_t *address, uint8_t asize)
 #ifdef RV3028_RTC
     Melopero_RV3028 rtc;
 #endif
+#ifdef DS3231_RTC
+    DS3231 rtc;
+#endif
 
 #if WIRE_INTERFACES_COUNT == 2
     if (port == I2CPort::WIRE1) {
@@ -186,6 +189,17 @@ void ScanI2CTwoWire::scanPort(I2CPort port, uint8_t *address, uint8_t asize)
                 rtc.initI2C(*i2cBus);
                 rtc.writeToRegister(0x35, 0x07); // no Clkout
                 rtc.writeToRegister(0x37, 0xB4);
+                break;
+#endif
+
+#ifdef DS3231_RTC
+            case DS3231_RTC:
+                // foundDevices[addr] = RTC_DS3231;
+                type = RTC_DS3231;
+                logFoundDevice("DS3231", (uint8_t)addr.address);
+                rtc.initI2C(*i2cBus);
+                // rtc.writeToRegister(0x35, 0x07); // no Clkout
+                // rtc.writeToRegister(0x37, 0xB4);
                 break;
 #endif
 
@@ -450,7 +464,8 @@ void ScanI2CTwoWire::scanPort(I2CPort port, uint8_t *address, uint8_t asize)
                 }
                 break;
 
-            case ICM20948_ADDR:     // same as BMX160_ADDR
+            /*
+                case ICM20948_ADDR:     // same as BMX160_ADDR
             case ICM20948_ADDR_ALT: // same as MPU6050_ADDR
                 registerValue = getRegisterValue(ScanI2CTwoWire::RegisterLocation(addr, 0x00), 1);
                 if (registerValue == 0xEA) {
@@ -467,7 +482,7 @@ void ScanI2CTwoWire::scanPort(I2CPort port, uint8_t *address, uint8_t asize)
                     break;
                 }
                 break;
-
+*/
             case CGRADSENS_ADDR:
                 // Register 0x00 of the RadSens sensor contains is product identifier 0x7D
                 // Undocumented, but some devices return a product identifier of 0x7A

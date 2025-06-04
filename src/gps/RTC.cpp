@@ -54,6 +54,35 @@ void readFromRTC()
             currentQuality = RTCQualityDevice;
         }
     }
+
+#ifdef DS3231_RTC
+    if (rtc_found.address == DS3231_RTC) {
+        uint32_t now = millis();
+        DS3231 rtc;
+#if WIRE_INTERFACES_COUNT == 2
+        rtc.initI2C(rtc_found.port == ScanI2C::I2CPort::WIRE1 ? Wire1 : Wire);
+#else
+        rtc.initI2C();
+#endif
+        tm t;
+        t.tm_year = rtc.getYear() - 1900;
+        t.tm_mon = rtc.getMonth() - 1;
+        t.tm_mday = rtc.getDate();
+        t.tm_hour = rtc.getHour();
+        t.tm_min = rtc.getMinute();
+        t.tm_sec = rtc.getSecond();
+        tv.tv_sec = gm_mktime(&t);
+        tv.tv_usec = 0;
+
+        uint32_t printableEpoch = tv.tv_sec; // Print lib only supports 32 bit but time_t can be 64 bit on some platforms
+        LOG_DEBUG("Read RTC time from ds3231 getTime as %02d-%02d-%02d %02d:%02d:%02d (%ld)", t.tm_year + 1900, t.tm_mon + 1,
+                  t.tm_mday, t.tm_hour, t.tm_min, t.tm_sec, printableEpoch);
+        timeStartMsec = now;
+        zeroOffsetSecs = tv.tv_sec;
+        if (currentQuality == RTCQualityNone) {
+            currentQuality = RTCQualityDevice;
+        }
+
 #elif defined(PCF8563_RTC)
     if (rtc_found.address == PCF8563_RTC) {
         uint32_t now = millis();
@@ -161,6 +190,21 @@ bool perhapsSetRTC(RTCQuality q, const struct timeval *tv, bool forceUpdate)
             LOG_DEBUG("RV3028_RTC setTime %02d-%02d-%02d %02d:%02d:%02d (%ld)", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday,
                       t->tm_hour, t->tm_min, t->tm_sec, printableEpoch);
         }
+
+#ifdef DS3231_RTC
+        if (rtc_found.address == DS3231_RTC) {
+            DS3231 rtc;
+#if WIRE_INTERFACES_COUNT == 2
+            rtc.initI2C(rtc_found.port == ScanI2C::I2CPort::WIRE1 ? Wire1 : Wire);
+#else
+            rtc.initI2C();
+#endif
+            tm *t = gmtime(&tv->tv_sec);
+            rtc.setTime(t->tm_year + 1900, t->tm_mon + 1, t->tm_wday, t->tm_mday, t->tm_hour, t->tm_min, t->tm_sec);
+            LOG_DEBUG("DS3231_RTC setTime %02d-%02d-%02d %02d:%02d:%02d (%ld)", t->tm_year + 1900, t->tm_mon + 1, t->tm_mday,
+                      t->tm_hour, t->tm_min, t->tm_sec, printableEpoch);
+        }
+
 #elif defined(PCF8563_RTC)
         if (rtc_found.address == PCF8563_RTC) {
             PCF8563_Class rtc;
