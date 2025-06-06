@@ -131,7 +131,9 @@ void ScanI2CTwoWire::scanPort(I2CPort port, uint8_t *address, uint8_t asize)
 #ifdef RV3028_RTC
     Melopero_RV3028 rtc;
 #endif
-
+#ifdef DS3231_RTC
+    DS3231 rtc;
+#endif
 #if WIRE_INTERFACES_COUNT == 2
     if (port == I2CPort::WIRE1) {
         i2cBus = &Wire1;
@@ -188,7 +190,16 @@ void ScanI2CTwoWire::scanPort(I2CPort port, uint8_t *address, uint8_t asize)
                 rtc.writeToRegister(0x37, 0xB4);
                 break;
 #endif
-
+#ifdef DS3231_RTC
+            case DS3231_RTC:
+                // foundDevices[addr] = RTC_DS3231;
+                type = RTC_DS3231;
+                logFoundDevice("DS3231", (uint8_t)addr.address);
+                rtc.initI2C(*i2cBus);
+                // rtc.writeToRegister(0x35, 0x07); // no Clkout
+                // rtc.writeToRegister(0x37, 0xB4);
+                break;
+#endif
 #ifdef PCF8563_RTC
                 SCAN_SIMPLE_CASE(PCF8563_RTC, RTC_PCF8563, "PCF8563", (uint8_t)addr.address)
 #endif
@@ -438,7 +449,7 @@ void ScanI2CTwoWire::scanPort(I2CPort port, uint8_t *address, uint8_t asize)
 #ifdef HAS_TPS65233
                 SCAN_SIMPLE_CASE(TPS65233_ADDR, TPS65233, "TPS65233", (uint8_t)addr.address);
 #endif
-
+           
             case MLX90614_ADDR_DEF:
                 registerValue = getRegisterValue(ScanI2CTwoWire::RegisterLocation(addr, 0x0e), 1);
                 if (registerValue == 0x5a) {
@@ -449,7 +460,7 @@ void ScanI2CTwoWire::scanPort(I2CPort port, uint8_t *address, uint8_t asize)
                     logFoundDevice("MPR121KB", (uint8_t)addr.address);
                 }
                 break;
-
+/*
             case ICM20948_ADDR:     // same as BMX160_ADDR
             case ICM20948_ADDR_ALT: // same as MPU6050_ADDR
                 registerValue = getRegisterValue(ScanI2CTwoWire::RegisterLocation(addr, 0x00), 1);
@@ -467,7 +478,7 @@ void ScanI2CTwoWire::scanPort(I2CPort port, uint8_t *address, uint8_t asize)
                     break;
                 }
                 break;
-
+*/
             case CGRADSENS_ADDR:
                 // Register 0x00 of the RadSens sensor contains is product identifier 0x7D
                 // Undocumented, but some devices return a product identifier of 0x7A
