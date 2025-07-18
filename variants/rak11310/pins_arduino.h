@@ -1,68 +1,64 @@
-#pragma once
+// #define RADIOLIB_CUSTOM_ARDUINO 1
+// #define RADIOLIB_TONE_UNSUPPORTED 1
+// #define RADIOLIB_SOFTWARE_SERIAL_UNSUPPORTED 1
 
-// Pin definitions taken from:
-//    https://datasheets.raspberrypi.org/pico/pico-datasheet.pdf
+#define ARDUINO_ARCH_AVR
 
-static const uint8_t WB_IO1 = 6;  // SLOT_A SLOT_B
-static const uint8_t WB_IO2 = 22; // SLOT_A SLOT_B
-static const uint8_t WB_IO3 = 7;  // SLOT_C
-static const uint8_t WB_IO4 = 28; // SLOT_C
-static const uint8_t WB_IO5 = 9;  // SLOT_D
-static const uint8_t WB_IO6 = 8;  // SLOT_D
-static const uint8_t WB_A0 = 26;  // IO_SLOT
-static const uint8_t WB_A1 = 27;  // IO_SLOT
+// Define I2C pins to ensure correct usage of both ports
+#define I2C_SDA 20
+#define I2C_SCL 21
+#define I2C_SDA1 2
+#define I2C_SCL1 3
 
-#define PIN_A0 (26u)
-#define PIN_A1 (27u)
-#define PIN_A2 (28u)
-#define PIN_A3 (29u)
+#define LED_CONN PIN_LED2
+#define LED_PIN LED_BUILTIN
+#define ledOff(pin) pinMode(pin, INPUT)
 
-static const uint8_t A0 = PIN_A0;
-static const uint8_t A1 = PIN_A1;
-static const uint8_t A2 = PIN_A2;
-static const uint8_t A3 = PIN_A3;
+#define BUTTON_PIN 9
+#define BUTTON_NEED_PULLUP
+// #define EXT_NOTIFY_OUT 4
 
-// LEDs
-#define PIN_LED (23u)
-#define PIN_LED1 PIN_LED
-#define PIN_LED2 (24u)
-#define LED_BUILTIN PIN_LED
+#define BATTERY_PIN 26
+#define BATTERY_SENSE_RESOLUTION_BITS ADC_RESOLUTION
+// ratio of voltage divider = 3.0 (R17=200k, R18=100k)
+#define ADC_MULTIPLIER 1.84
 
-#define ADC_RESOLUTION 12
+#define DETECTION_SENSOR_EN 28
 
-// Serial
-#define PIN_SERIAL1_TX (0ul)
-#define PIN_SERIAL1_RX (1ul)
+#define USE_SX1262
 
-#define PIN_SERIAL2_TX (4ul)
-#define PIN_SERIAL2_RX (5ul)
+#undef LORA_SCK
+#undef LORA_MISO
+#undef LORA_MOSI
+#undef LORA_CS
 
-// SPI
-#define PIN_SPI1_MISO (12u)
-#define PIN_SPI1_MOSI (11u)
-#define PIN_SPI1_SCK (10u)
-#define PIN_SPI1_SS (13u)
+// RAK BSP somehow uses SPI1 instead of SPI0
+#define HW_SPI1_DEVICE
+#define LORA_SCK (10u)
+#define LORA_MOSI (11u)
+#define LORA_MISO (12u)
+#define LORA_CS (13u)
 
-#define PIN_SPI0_MISO (16u)
-#define PIN_SPI0_MOSI (19u)
-#define PIN_SPI0_SCK (18u)
-#define PIN_SPI0_SS (17u)
+#define LORA_DIO0 RADIOLIB_NC
+#define LORA_RESET 14
+#define LORA_DIO1 29
+#define LORA_DIO2 15
+#define LORA_DIO3 RADIOLIB_NC
 
-// Wire
-#define PIN_WIRE0_SDA (2u)
-#define PIN_WIRE0_SCL (3u)
+#ifdef USE_SX1262
+#define SX126X_CS LORA_CS
+#define SX126X_DIO1 LORA_DIO1
+#define SX126X_BUSY LORA_DIO2
+#define SX126X_RESET LORA_RESET
+#define SX126X_POWER_EN 25
+// DIO2 controlls an antenna switch and the TCXO voltage is controlled by DIO3
+#define SX126X_DIO2_AS_RF_SWITCH
+#define SX126X_DIO3_TCXO_VOLTAGE 1.8
+#endif
 
-#define PIN_WIRE1_SDA (20u)
-#define PIN_WIRE1_SCL (21u)
+#define HAS_ETHERNET 1
+#define PIN_ETHERNET_RESET 7 // IO3
+#define PIN_ETHERNET_SS 17
+#define ETH_SPI_PORT SPI
 
-#define SERIAL_HOWMANY (3u)
-#define SPI_HOWMANY (2u)
-#define WIRE_HOWMANY (2u)
-
-static const uint8_t SS = PIN_SPI0_SS;
-static const uint8_t MOSI = PIN_SPI0_MOSI;
-static const uint8_t MISO = PIN_SPI0_MISO;
-static const uint8_t SCK = PIN_SPI0_SCK;
-
-static const uint8_t SDA = PIN_WIRE0_SDA;
-static const uint8_t SCL = PIN_WIRE0_SCL;
+#define PIN_ETH_POWER_EN 22
