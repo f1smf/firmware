@@ -4,7 +4,7 @@
 
 #define ARDUINO_ARCH_AVR
 
-/*#define RP2040_SLOW_CLOCK
+#define RP2040_SLOW_CLOCK
 
 #ifdef RP2040_SLOW_CLOCK
 // Redefine UART1 serial log output to avoid collision with UART0 for GPS.
@@ -14,7 +14,7 @@
 #define log_e(...) Serial2.printf(__VA_ARGS__)
 #define log_i(...) Serial2.printf(__VA_ARGS__)
 #define log_d(...) Serial2.printf(__VA_ARGS__)
-#endif*/
+#endif
 
 // Define I2C pins to ensure correct usage of both ports
 #define I2C_SDA 20
@@ -45,7 +45,8 @@
 #undef LORA_CS
 
 // RAK BSP somehow uses SPI1 instead of SPI0
-/*#define HW_SPI1_DEVICE
+/*
+#define HW_SPI1_DEVICE
 #define LORA_SCK (10u)
 #define LORA_MOSI (11u)
 #define LORA_MISO (12u)
@@ -67,6 +68,7 @@
 #define SX126X_DIO2_AS_RF_SWITCH
 #define SX126X_DIO3_TCXO_VOLTAGE 1.8
 #endif*/
+
 // RAK BSP somehow uses SPI1 instead of SPI0
 #define HW_SPI1_DEVICE
 #define LORA_SCK (14u)
@@ -95,16 +97,15 @@
 //#define SX126X_TXEN 19
 #define SX126X_DIO3_TCXO_VOLTAGE 1.8
 #endif
-
+/*
 #define HAS_ETHERNET 1
 #define PIN_ETHERNET_RESET 7 // IO3
 #define PIN_ETHERNET_SS 17
 #define ETH_SPI_PORT SPI
-
+*/
 //#define PIN_ETH_POWER_EN 6
 
 #undef  MAX_NUM_NODES
 #define MAX_NUM_NODES 500
 //#define MAX_NUM_NODES_FS 500
-
 //#define SX126X_MAX_POWER 30
