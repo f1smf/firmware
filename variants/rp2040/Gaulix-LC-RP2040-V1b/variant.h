@@ -4,6 +4,7 @@
 
 #define ARDUINO_ARCH_AVR
 
+/*
 #define RP2040_SLOW_CLOCK
 
 #ifdef RP2040_SLOW_CLOCK
@@ -15,6 +16,7 @@
 #define log_i(...) Serial2.printf(__VA_ARGS__)
 #define log_d(...) Serial2.printf(__VA_ARGS__)
 #endif
+*/ 
 
 // Define I2C pins to ensure correct usage of both ports
 #define I2C_SDA 20
