@@ -4,17 +4,25 @@
 
 #define ARDUINO_ARCH_AVR
 
+#define debug_pcn 
+
+#ifdef debug_pcn
+#define log_e(...) Serial2.printf(__VA_ARGS__)
+#define log_i(...) Serial2.printf(__VA_ARGS__)
+#define log_d(...) Serial2.printf(__VA_ARGS__)
+#endif
+
 #undef MAX_NUM_NODES
 #define MAX_NUM_NODES 250
 
 // #define USE_SH1106 1
 
 // Define I2C pins to ensure correct usage of both ports
-#define I2C_SDA 20
-#define I2C_SCL 21
+#define I2C_SDA 20  // i2c channel 0 on external IO connector
+#define I2C_SCL 21  // i2c channel 0 on external IO connector
 
-#define I2C_SDA1 2  // Second i2c channel on external IO connector
-#define I2C_SCL1 3  // Second i2c channel on external IO connector
+#define I2C_SDA1 10  // i2c channel 1 on external IO connector
+#define I2C_SCL1 11  // Second i2c channel 1on external IO connector
 
 // Serial
 #undef PIN_SERIAL1_TX
@@ -22,13 +30,14 @@
 #undef PIN_SERIAL2_TX
 #undef PIN_SERIAL2_RX
 
-#define PIN_SERIAL1_TX (0ul)
-#define PIN_SERIAL1_RX (1ul)
-#define PIN_SERIAL2_TX (4ul)
-#define PIN_SERIAL2_RX (5ul)
+#define PIN_SERIAL1_TX 0
+#define PIN_SERIAL1_RX 1
+
+#define PIN_SERIAL2_TX 8
+#define PIN_SERIAL2_RX 9
 
 #define EXT_NOTIFY_OUT 22
-#define BUTTON_PIN 9
+#define BUTTON_PIN 12
 #define BUTTON_NEED_PULLUP
 
 #define LED_PIN PIN_LED
