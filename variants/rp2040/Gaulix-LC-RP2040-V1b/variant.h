@@ -1,14 +1,15 @@
-// #define RADIOLIB_CUSTOM_ARDUINO 1
-// #define RADIOLIB_TONE_UNSUPPORTED 1
-// #define RADIOLIB_SOFTWARE_SERIAL_UNSUPPORTED 1
+// varian carte gaulix
+//#define RADIOLIB_DEBUG_BASIC        (1)   // basic debugging (e.g. reporting GPIO timeouts or module not being found)
+//#define RADIOLIB_DEBUG_PROTOCOL     (1)   // protocol information (e.g. LoRaWAN internal information)
+//#define RADIOLIB_DEBUG_SPI          (1)   // verbose transcription of all SPI communication - produces large debug logs!
 
 #define ARDUINO_ARCH_AVR
 
-#define debug_pcn 
+//#define debug_pcn 
 
 #ifdef debug_pcn
-#define log_e(...) Serial2.printf(__VA_ARGS__)
-#define log_i(...) Serial2.printf(__VA_ARGS__)
+//#define log_e(...) Serial2.printf(__VA_ARGS__)
+//#define log_i(...) Serial2.printf(__VA_ARGS__)
 #define log_d(...) Serial2.printf(__VA_ARGS__)
 #endif
 
@@ -36,8 +37,20 @@
 #define PIN_SERIAL2_TX 8
 #define PIN_SERIAL2_RX 9
 
-#define EXT_NOTIFY_OUT 22
-#define BUTTON_PIN 12
+// Waveshare Pico GPS L76B pins: (board uart0)
+#define HAS_GPS 1
+// #define PIN_GPS_RESET (34)
+// #define PIN_GPS_EN 22
+#define GPS_RX_PIN PIN_SERIAL1_RX
+#define GPS_TX_PIN PIN_SERIAL1_TX
+
+
+// No GPS reset available
+#undef PIN_GPS_RESET
+
+#define EXT_NOTIFY_OUT 22  // notify out
+
+#define BUTTON_PIN 12      //botton 
 #define BUTTON_NEED_PULLUP
 
 #define LED_PIN PIN_LED
@@ -81,7 +94,7 @@
 #define SX126X_DIO1 LORA_DIO1
 #define SX126X_BUSY LORA_BUSY
 #define SX126X_RESET LORA_RESET
-#define SX126X_DIO2_AS_RF_SWITCH // Antenna switch CTRL
+#define SX126X_DIO2_AS_RF_SWITCH   // Antenna switch CTRL
 #define SX126X_RXEN LORA_DIO4    // Antenna switch !CTRL via GPIO17
 #define SX126X_DIO3_TCXO_VOLTAGE 1.8
 
